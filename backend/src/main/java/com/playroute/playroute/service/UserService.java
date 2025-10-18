@@ -28,7 +28,7 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User not found: " + id));
     }
 
-    public UserDto createUser(UserCreateDto dto) {
+    public UserDto createUser(UserDto dto) {
         UserEntity entity = UserEntity.builder()
                 .userName(dto.getUserName())
                 .budgetLimit(dto.getBudgetLimit())
@@ -40,7 +40,7 @@ public class UserService {
         return toDto(userRepository.save(entity));
     }
 
-    public UserDto updateUser(Integer id, UserUpdateDto dto) {
+    public UserDto updateUser(Integer id, UserDto dto) {
         UserEntity entity = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found: " + id));
 

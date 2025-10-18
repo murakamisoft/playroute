@@ -3,31 +3,37 @@ package com.playroute.playroute.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+
+import org.hibernate.annotations.Type;
+
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 
 @Entity
-@Table(name = "m_user")
+@Table(name = "t_plan")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserEntity {
+public class PlanEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer planId;
+
     private Integer userId;
 
-    @Column(nullable = false, length = 100)
-    private String userName;
+    private LocalDateTime startTime;
 
-    @Column
-    private Double budgetLimit;
+    private LocalDateTime endTime;
 
-    @Column(length = 20)
-    private String defaultTransport;
+    private Double totalCost;
 
-    @Column(columnDefinition = "TEXT")
-    private String interests;
+    @Type(value = JsonBinaryType.class)
+    @Column(columnDefinition = "jsonb")
+    private List<Map<String, Object>> spots;
 
     private LocalDateTime createdAt;
 

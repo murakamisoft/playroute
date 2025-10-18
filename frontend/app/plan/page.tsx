@@ -1,23 +1,55 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function PlanPage() {
+    const router = useRouter();
     const [form, setForm] = useState({
         startTime: "",
         endTime: "",
         budget: "",
         interests: "",
     });
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        alert(`仮生成しました！\n${JSON.stringify(form, null, 2)}`);
+        setLoading(true);
+
+        try {
+            // 興味をカンマ区切りから配列に変換
+            const spotsArray = form.interests
+                ? form.interests.split(",").map((s) => s.trim()).filter(Boolean)
+                : [];
+
+            // 送信する JSON を作成
+            const requestData = {
+                userId: 1, // 仮: ログインユーザーID
+                startTime: form.startTime,
+                endTime: form.endTime,
+                spots: spotsArray
+            };
+
+            // デバッグ用ログ出力
+            console.log("送信するJSON:", JSON.stringify(requestData, null, 2));
+
+            const response = await axios.post("http://localhost:8080/api/plans", requestData);
+
+
+            const planId = (response.data as { plan_id: number }).plan_id;
+            router.push(`/plan/result?planId=${planId}`);
+        } catch (err) {
+            console.error(err);
+            alert("プラン生成に失敗しました。");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -75,20 +107,12 @@ export default function PlanPage() {
 
                     <button
                         type="submit"
-                        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 mt-2 rounded-full shadow-md transition-transform transform hover:scale-105"
+                        disabled={loading}
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 mt-2 rounded-full shadow-md transition-transform transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        プラン生成（仮）
+                        {loading ? "生成中..." : "プラン生成（仮）"}
                     </button>
                 </form>
-
-                <div className="text-center mt-6">
-                    <Link
-                        href="/"
-                        className="text-blue-600 hover:underline text-sm transition-colors"
-                    >
-                        ← トップへ戻る
-                    </Link>
-                </div>
             </div>
         </main>
     );
