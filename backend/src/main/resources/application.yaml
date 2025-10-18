@@ -1,4 +1,27 @@
-spring
-  application
-    name
-      playroute
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/playroute_db
+    username: playroute_user
+    password: playroute_pass
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update # 開発中は update、本番は validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    time-zone: Asia/Tokyo
+
+# サーバー設定
+server:
+  port: 8080
+
+# ロギング設定
+logging:
+  level:
+    org.springframework: INFO
+    com.yourcompany.playroute: DEBUG
