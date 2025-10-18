@@ -9,7 +9,7 @@ export default function PlanPage() {
     const [form, setForm] = useState({
         startTime: "",
         endTime: "",
-        budget: "",
+        totalCost: "",
         interests: "",
     });
     const [loading, setLoading] = useState(false);
@@ -23,17 +23,23 @@ export default function PlanPage() {
         setLoading(true);
 
         try {
-            // 興味をカンマ区切りから配列に変換
-            const spotsArray = form.interests
-                ? form.interests.split(",").map((s) => s.trim()).filter(Boolean)
+            const spotsJson = form.interests
+                ? form.interests
+                    .split(",")
+                    .map((s) => s.trim())
+                    .filter(Boolean)
+                    .map((s) => ({ name: s }))
                 : [];
 
             // 送信する JSON を作成
             const requestData = {
-                userId: 1, // 仮: ログインユーザーID
+                userId: 1,
                 startTime: form.startTime,
                 endTime: form.endTime,
-                spots: spotsArray
+                totalCost: form.totalCost,
+                spots: spotsJson,
+                createdBy: 'nori',
+                updatedBy: 'nori'
             };
 
             // デバッグ用ログ出力
@@ -86,8 +92,8 @@ export default function PlanPage() {
                         予算（円）
                         <input
                             type="number"
-                            name="budget"
-                            value={form.budget}
+                            name="totalCost"
+                            value={form.totalCost}
                             onChange={handleChange}
                             className="w-full mt-1 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                         />
