@@ -13,32 +13,33 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
 
-  private final UserService userService;
+    private final UserService userService;
 
-  @GetMapping
-  public List<UserDto> getAll() {
-    return userService.getAllUsers();
-  }
+    @GetMapping
+    public List<UserDto> getAll() {
+        return userService.getAllUsers();
+    }
 
-  @GetMapping("/{userId}")
-  public UserDto get(@PathVariable Integer userId) {
-    return userService.getUser(userId);
-  }
+    @GetMapping("/{userId}")
+    public UserDto get(@PathVariable Integer userId) {
+        return userService.getUser(userId);
+    }
 
-  @PostMapping
-  @ResponseStatus(HttpStatus.CREATED)
-  public UserDto create(@RequestBody UserCreateDto dto) {
-    return userService.createUser(dto);
-  }
+    // @PostMapping
+    // @ResponseStatus(HttpStatus.CREATED)
+    // public UserDto create(@RequestBody UserCreateDto dto) {
+    // return userService.createUser(dto);
+    // }
 
-  @PutMapping("/{userId}")
-  public UserDto update(@PathVariable Integer userId, @RequestBody UserUpdateDto dto) {
-    return userService.updateUser(userId, dto);
-  }
+    // @PutMapping("/{userId}")
+    // public UserDto update(@PathVariable Integer userId, @RequestBody
+    // UserUpdateDto dto) {
+    // return userService.updateUser(userId, dto);
+    // }
 
-  @DeleteMapping("/{userId}")
-  @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable Integer userId) {
-    userService.deleteUser(userId);
-  }
+    @DeleteMapping("/{userId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Integer userId) {
+        userService.deleteUser(userId);
+    }
 }

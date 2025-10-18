@@ -9,13 +9,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
-	private Integer userId;
-	private String userName;
-	private Double budgetLimit;
-	private String defaultTransport;
-	private String interests;
-	private LocalDateTime createdAt;
-	private String createdBy;
-	private LocalDateTime updatedAt;
-	private String updatedBy;
+    private Integer userId;
+    private String userName;
+    private Double budgetLimit;
+    private String defaultTransport;
+    private String interests;
+    private LocalDateTime createdAt;
+    private String createdBy;
+    private LocalDateTime updatedAt;
+    private String updatedBy;
 }

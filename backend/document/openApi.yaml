@@ -16,14 +16,14 @@ paths:
     get:
       summary: ユーザー一覧取得
       responses:
-        '200':
+        "200":
           description: ユーザー一覧
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: "#/components/schemas/User"
     post:
       summary: ユーザー作成
       requestBody:
@@ -31,14 +31,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserCreate'
+              $ref: "#/components/schemas/UserCreate"
       responses:
-        '201':
+        "201":
           description: 作成完了
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
 
   /users/{userId}:
     get:
@@ -50,12 +50,12 @@ paths:
             type: integer
           required: true
       responses:
-        '200':
+        "200":
           description: ユーザー詳細
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
     put:
       summary: ユーザー更新
       parameters:
@@ -69,14 +69,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserUpdate'
+              $ref: "#/components/schemas/UserUpdate"
       responses:
-        '200':
+        "200":
           description: 更新完了
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
     delete:
       summary: ユーザー削除
       parameters:
@@ -86,7 +86,7 @@ paths:
             type: integer
           required: true
       responses:
-        '204':
+        "204":
           description: 削除完了
 
   # =======================
@@ -96,14 +96,14 @@ paths:
     get:
       summary: スポット一覧取得
       responses:
-        '200':
+        "200":
           description: スポット一覧
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Spot'
+                  $ref: "#/components/schemas/Spot"
     post:
       summary: スポット作成
       requestBody:
@@ -111,14 +111,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SpotCreate'
+              $ref: "#/components/schemas/SpotCreate"
       responses:
-        '201':
+        "201":
           description: 作成完了
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Spot'
+                $ref: "#/components/schemas/Spot"
 
   /spots/{spotId}:
     get:
@@ -130,12 +130,12 @@ paths:
             type: integer
           required: true
       responses:
-        '200':
+        "200":
           description: スポット詳細
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Spot'
+                $ref: "#/components/schemas/Spot"
     put:
       summary: スポット更新
       parameters:
@@ -149,14 +149,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SpotUpdate'
+              $ref: "#/components/schemas/SpotUpdate"
       responses:
-        '200':
+        "200":
           description: 更新完了
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Spot'
+                $ref: "#/components/schemas/Spot"
     delete:
       summary: スポット削除
       parameters:
@@ -166,7 +166,7 @@ paths:
             type: integer
           required: true
       responses:
-        '204':
+        "204":
           description: 削除完了
 
   # =======================
@@ -176,14 +176,14 @@ paths:
     get:
       summary: プラン一覧取得
       responses:
-        '200':
+        "200":
           description: プラン一覧
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Plan'
+                  $ref: "#/components/schemas/Plan"
     post:
       summary: プラン作成
       requestBody:
@@ -191,14 +191,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PlanCreate'
+              $ref: "#/components/schemas/PlanCreate"
       responses:
-        '201':
+        "201":
           description: 作成完了
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Plan'
+                $ref: "#/components/schemas/Plan"
 
   /plans/{planId}:
     get:
@@ -210,12 +210,12 @@ paths:
             type: integer
           required: true
       responses:
-        '200':
+        "200":
           description: プラン詳細
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Plan'
+                $ref: "#/components/schemas/Plan"
     put:
       summary: プラン更新
       parameters:
@@ -229,14 +229,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PlanUpdate'
+              $ref: "#/components/schemas/PlanUpdate"
       responses:
-        '200':
+        "200":
           description: 更新完了
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Plan'
+                $ref: "#/components/schemas/Plan"
     delete:
       summary: プラン削除
       parameters:
@@ -246,7 +246,7 @@ paths:
             type: integer
           required: true
       responses:
-        '204':
+        "204":
           description: 削除完了
 
   # =======================
@@ -256,14 +256,14 @@ paths:
     get:
       summary: プランスポット一覧取得
       responses:
-        '200':
+        "200":
           description: プランスポット一覧
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PlanSpot'
+                  $ref: "#/components/schemas/PlanSpot"
     post:
       summary: プランスポット作成
       requestBody:
@@ -271,14 +271,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PlanSpotCreate'
+              $ref: "#/components/schemas/PlanSpotCreate"
       responses:
-        '201':
+        "201":
           description: 作成完了
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PlanSpot'
+                $ref: "#/components/schemas/PlanSpot"
 
   /plan-spots/{id}:
     get:
@@ -290,12 +290,12 @@ paths:
             type: integer
           required: true
       responses:
-        '200':
+        "200":
           description: プランスポット詳細
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PlanSpot'
+                $ref: "#/components/schemas/PlanSpot"
     put:
       summary: プランスポット更新
       parameters:
@@ -309,14 +309,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PlanSpotUpdate'
+              $ref: "#/components/schemas/PlanSpotUpdate"
       responses:
-        '200':
+        "200":
           description: 更新完了
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PlanSpot'
+                $ref: "#/components/schemas/PlanSpot"
     delete:
       summary: プランスポット削除
       parameters:
@@ -326,7 +326,7 @@ paths:
             type: integer
           required: true
       responses:
-        '204':
+        "204":
           description: 削除完了
 
 # =======================
@@ -379,7 +379,7 @@ components:
 
     UserUpdate:
       allOf:
-        - $ref: '#/components/schemas/UserCreate'
+        - $ref: "#/components/schemas/UserCreate"
 
     Spot:
       type: object
@@ -437,7 +437,7 @@ components:
 
     SpotUpdate:
       allOf:
-        - $ref: '#/components/schemas/SpotCreate'
+        - $ref: "#/components/schemas/SpotCreate"
 
     Plan:
       type: object
@@ -493,7 +493,7 @@ components:
 
     PlanUpdate:
       allOf:
-        - $ref: '#/components/schemas/PlanCreate'
+        - $ref: "#/components/schemas/PlanCreate"
 
     PlanSpot:
       type: object
@@ -508,7 +508,7 @@ components:
           type: integer
         duration:
           type: string
-          description: INTERVAL形式（例: 01:30:00）
+          description: "INTERVAL形式（例: 01:30:00）"
         created_at:
           type: string
           format: date-time
@@ -539,4 +539,4 @@ components:
 
     PlanSpotUpdate:
       allOf:
-        - $ref: '#/components/schemas/PlanSpotCreate'
+        - $ref: "#/components/schemas/PlanSpotCreate"

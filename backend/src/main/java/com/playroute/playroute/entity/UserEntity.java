@@ -13,38 +13,38 @@ import java.time.LocalDateTime;
 @Builder
 public class UserEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer userId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer userId;
 
-	@Column(nullable = false, length = 100)
-	private String userName;
+    @Column(nullable = false, length = 100)
+    private String userName;
 
-	@Column(precision = 10, scale = 2)
-	private Double budgetLimit;
+    @Column(precision = 10, scale = 2)
+    private Double budgetLimit;
 
-	@Column(length = 20)
-	private String defaultTransport;
+    @Column(length = 20)
+    private String defaultTransport;
 
-	@Column(columnDefinition = "TEXT")
-	private String interests;
+    @Column(columnDefinition = "TEXT")
+    private String interests;
 
-	private LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
-	private String createdBy;
+    private String createdBy;
 
-	private LocalDateTime updatedAt;
+    private LocalDateTime updatedAt;
 
-	private String updatedBy;
+    private String updatedBy;
 
-	@PrePersist
-	public void prePersist() {
-		this.createdAt = LocalDateTime.now();
-		this.updatedAt = LocalDateTime.now();
-	}
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
 
-	@PreUpdate
-	public void preUpdate() {
-		this.updatedAt = LocalDateTime.now();
-	}
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 }
