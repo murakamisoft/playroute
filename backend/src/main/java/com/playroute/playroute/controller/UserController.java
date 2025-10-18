@@ -25,18 +25,6 @@ public class UserController {
         return userService.getUser(userId);
     }
 
-    // @PostMapping
-    // @ResponseStatus(HttpStatus.CREATED)
-    // public UserDto create(@RequestBody UserCreateDto dto) {
-    // return userService.createUser(dto);
-    // }
-
-    // @PutMapping("/{userId}")
-    // public UserDto update(@PathVariable Integer userId, @RequestBody
-    // UserUpdateDto dto) {
-    // return userService.updateUser(userId, dto);
-    // }
-
     @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer userId) {

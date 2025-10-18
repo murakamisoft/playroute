@@ -1,104 +1,129 @@
-# PlayRoute
+# 🎮 PlayRoute
 
-**Weekend Fun Plan Auto-Generation App**  
-週末や休日に遊びたい大人向けの、自動遊びプラン生成Webアプリです。  
-予算・時間・場所・興味に応じて、おすすめスポットやルートを提案します。
-
----
-
-## 1️⃣ ターゲット
-
-- 週末・休日に遊びたい大人向け
-- 予算・時間・場所・趣味に合わせてプランを自動生成
+**週末の遊びプランを自動生成するWebアプリ**  
+バックエンドに Spring Boot（Java 21）＋ PostgreSQL、  
+フロントエンドに Next.js（TypeScript + Tailwind CSS）を使用しています。
 
 ---
 
-## 2️⃣ 必須機能
+## 🧩 プロジェクト構成
 
-### a. プラン生成
-- **入力項目**
-  - 日時（例：日曜15:00〜18:00）
-  - 予算
-  - 移動手段（車・電車・徒歩）
-  - 興味（カフェ、キャンプ、バー、ドライブ、アクティブなど）
-- **出力**
-  - ルート（マップ表示）
-  - おすすめスポット（リンク・簡単情報付き）
-  - 時間配分（移動時間・滞在時間）
-- **ロジック**
-  - 条件マッチ＋ランダム要素で飽きないように
+```
 
-### b. プラン管理
-- 過去プランの保存・編集
-- お気に入り登録
-- 達成済みチェック
+playroute/
+├── backend/                  # Spring Boot アプリ
+│   ├── src/main/java/...     # ソースコード
+│   ├── src/test/java/...     # テストコード
+│   ├── build.gradle           # Gradle設定
+│   ├── application.yaml       # DB接続設定
+│   └── document/
+│       └── openApi.yaml       # API仕様書（OpenAPI 3.0）
+│
+├── frontend/                 # Next.js アプリ
+│   ├── app/                  # App Router 構成
+│   ├── components/            # UIコンポーネント
+│   ├── public/                # 静的ファイル
+│   ├── package.json
+│   └── tailwind.config.ts
+│
+└── db/                       # データベーススクリプト
+├── create.sql             # テーブル作成
+└── mst_insert.sql         # 初期データ登録
 
-### c. ユーザー設定
-- 予算上限、移動手段のデフォルト
-- 興味ジャンルの優先順位
-
-### d. シェア・評価（任意）
-- 友人やSNSにプランを共有
-- 評価・コメントを付けられる
+````
 
 ---
 
-## 3️⃣ 技術スタック
+## ⚙️ 環境構築手順
 
-- **フロントエンド**：React(next.js)
-  - カレンダー・マップ表示、フォーム入力UI
-- **バックエンド**：Spring Boot + JPA
-  - プラン生成ロジック
-  - プラン履歴保存
-- **データベース**：PostgreSQL
-  - ユーザー情報、スポット情報、プラン履歴
-- **その他**
-  - Google Maps API（ルート表示）
-  - タイムライン表示用コンポーネント
+### 1️⃣ PostgreSQL セットアップ
 
----
+```bash
+# psql ログイン
+psql -U postgres
 
-## 4️⃣ DB設計イメージ
+# DBとユーザー作成
+CREATE DATABASE playroute_db;
+CREATE USER playroute_user WITH PASSWORD 'playroute_pass';
+GRANT ALL PRIVILEGES ON DATABASE playroute_db TO playroute_user;
+\q
 
-| テーブル  | 主なカラム                                                 |
-| --------- | ---------------------------------------------------------- |
-| user      | id, name, budget_limit, default_transport, interests       |
-| spot      | id, name, type, location(lat,lng), cost, description       |
-| plan      | id, user_id, start_time, end_time, total_cost, spots(json) |
-| plan_spot | id, plan_id, spot_id, order, duration                      |
+# テーブル・データ作成
+psql -U playroute_user -d playroute_db -f ./db/create.sql
+psql -U playroute_user -d playroute_db -f ./db/mst_insert.sql
+````
 
 ---
 
-## 5️⃣ フロント画面イメージ
+### 2️⃣ バックエンド起動（Spring Boot）
 
-1. **トップ画面**
-   - 今日のプラン生成ボタン
-   - 過去プラン一覧
-2. **プラン入力画面**
-   - 予算 / 時間 / 興味 / 移動手段フォーム
-3. **プラン結果画面**
-   - スポット一覧
-   - マップルート表示
-   - 滞在時間・移動時間の簡易スケジュール
-4. **プラン詳細画面**
-   - 各スポット詳細
-   - 達成チェック・お気に入り登録
+```bash
+cd backend
+./gradlew bootRun
+```
+
+* 起動ポート: **8080**
+* 動作確認:
+  [http://localhost:8080/api/users](http://localhost:8080/api/users)
+  → 初期データ（例：のり、ゆかり）が返ればOK。
 
 ---
 
-## 6️⃣ 開発ステップ（プロトタイプ）
+### 3️⃣ フロントエンド起動（Next.js）
 
-まずは最小限機能でプロトタイプを作るのがおすすめ：
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-- 予算・時間・興味だけ入力
-- 3スポット生成
-- マップ表示
+* 起動ポート: **3000**
+* URL: [http://localhost:3000](http://localhost:3000)
+
+.env.local に以下を設定：
+
+```
+NEXT_PUBLIC_API_URL=http://localhost:8080/api
+```
 
 ---
 
-## 7️⃣ 今後の拡張予定
+### 4️⃣ OpenAPI の確認方法
 
-- ユーザー認証
-- プラン自動最適化アルゴリズム改善
-- お気に入り・ランキング機能
-- 遊びジャンルの拡張（カラオケ・キャンプ・ドライブ・バーなど）
+OpenAPI 仕様書（`backend/document/openApi.yaml`）を
+[Swagger Editor](https://editor.swagger.io/) にドラッグ＆ドロップ。
+
+または、Spring Boot に Swagger UI を追加して表示することも可能です。
+
+---
+
+## 🧠 使用技術
+
+| カテゴリ       | 技術                                             |
+| -------------- | ------------------------------------------------ |
+| バックエンド   | Java 21 / Spring Boot / Gradle / JPA             |
+| データベース   | PostgreSQL                                       |
+| フロントエンド | Next.js (App Router) / TypeScript / Tailwind CSS |
+| API設計        | OpenAPI 3.0 (YAML形式)                           |
+| 環境           | Windows 11 / VSCode / MINGW64                    |
+
+---
+
+## 📦 主な機能（予定含む）
+
+* ユーザー登録・管理
+* 行きたいスポット登録（例：水族館・温泉・カフェ）
+* 条件から遊びプランを自動生成
+* プランの共有（URLまたはQRコード）
+* おしゃれで直感的なUI（Tailwind + モダンデザイン）
+
+---
+
+## 🚀 今後の展望
+
+* [ ] OpenAPI から TypeScript 型を自動生成
+* [ ] 「プラン生成」画面のUI実装
+* [ ] Spring Boot に Swagger UI を組み込み
+* [ ] Docker Compose による一括起動
+* [ ] AIによるおすすめプラン生成
+
