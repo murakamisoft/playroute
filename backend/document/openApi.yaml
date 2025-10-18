@@ -1,0 +1,542 @@
+openapi: 3.0.3
+info:
+  title: Playroute API
+  version: 1.0.0
+  description: PlayrouteのバックエンドAPI。ユーザー・スポット・プラン・プランスポットのCRUDを提供。
+
+servers:
+  - url: http://localhost:8080/api
+    description: ローカル開発用サーバ
+
+paths:
+  # =======================
+  # ユーザー
+  # =======================
+  /users:
+    get:
+      summary: ユーザー一覧取得
+      responses:
+        '200':
+          description: ユーザー一覧
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      summary: ユーザー作成
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+      responses:
+        '201':
+          description: 作成完了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /users/{userId}:
+    get:
+      summary: ユーザー詳細取得
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: ユーザー詳細
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    put:
+      summary: ユーザー更新
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+      responses:
+        '200':
+          description: 更新完了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    delete:
+      summary: ユーザー削除
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+      responses:
+        '204':
+          description: 削除完了
+
+  # =======================
+  # スポット
+  # =======================
+  /spots:
+    get:
+      summary: スポット一覧取得
+      responses:
+        '200':
+          description: スポット一覧
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Spot'
+    post:
+      summary: スポット作成
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpotCreate'
+      responses:
+        '201':
+          description: 作成完了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Spot'
+
+  /spots/{spotId}:
+    get:
+      summary: スポット詳細取得
+      parameters:
+        - in: path
+          name: spotId
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: スポット詳細
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Spot'
+    put:
+      summary: スポット更新
+      parameters:
+        - in: path
+          name: spotId
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpotUpdate'
+      responses:
+        '200':
+          description: 更新完了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Spot'
+    delete:
+      summary: スポット削除
+      parameters:
+        - in: path
+          name: spotId
+          schema:
+            type: integer
+          required: true
+      responses:
+        '204':
+          description: 削除完了
+
+  # =======================
+  # プラン
+  # =======================
+  /plans:
+    get:
+      summary: プラン一覧取得
+      responses:
+        '200':
+          description: プラン一覧
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Plan'
+    post:
+      summary: プラン作成
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlanCreate'
+      responses:
+        '201':
+          description: 作成完了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plan'
+
+  /plans/{planId}:
+    get:
+      summary: プラン詳細取得
+      parameters:
+        - in: path
+          name: planId
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: プラン詳細
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plan'
+    put:
+      summary: プラン更新
+      parameters:
+        - in: path
+          name: planId
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlanUpdate'
+      responses:
+        '200':
+          description: 更新完了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plan'
+    delete:
+      summary: プラン削除
+      parameters:
+        - in: path
+          name: planId
+          schema:
+            type: integer
+          required: true
+      responses:
+        '204':
+          description: 削除完了
+
+  # =======================
+  # プランスポット
+  # =======================
+  /plan-spots:
+    get:
+      summary: プランスポット一覧取得
+      responses:
+        '200':
+          description: プランスポット一覧
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlanSpot'
+    post:
+      summary: プランスポット作成
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlanSpotCreate'
+      responses:
+        '201':
+          description: 作成完了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlanSpot'
+
+  /plan-spots/{id}:
+    get:
+      summary: プランスポット詳細取得
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: プランスポット詳細
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlanSpot'
+    put:
+      summary: プランスポット更新
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlanSpotUpdate'
+      responses:
+        '200':
+          description: 更新完了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlanSpot'
+    delete:
+      summary: プランスポット削除
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '204':
+          description: 削除完了
+
+# =======================
+# スキーマ定義
+# =======================
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        user_id:
+          type: integer
+        user_name:
+          type: string
+        budget_limit:
+          type: number
+          format: float
+        default_transport:
+          type: string
+        interests:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        updated_by:
+          type: string
+
+    UserCreate:
+      type: object
+      required: [user_name]
+      properties:
+        user_name:
+          type: string
+        budget_limit:
+          type: number
+          format: float
+        default_transport:
+          type: string
+        interests:
+          type: string
+        created_by:
+          type: string
+        updated_by:
+          type: string
+
+    UserUpdate:
+      allOf:
+        - $ref: '#/components/schemas/UserCreate'
+
+    Spot:
+      type: object
+      properties:
+        spot_id:
+          type: integer
+        spot_name:
+          type: string
+        type:
+          type: string
+        lat:
+          type: number
+          format: float
+        lng:
+          type: number
+          format: float
+        cost:
+          type: number
+          format: float
+        description:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+        updated_at:
+          type: string
+        updated_by:
+          type: string
+
+    SpotCreate:
+      type: object
+      required: [spot_name]
+      properties:
+        spot_name:
+          type: string
+        type:
+          type: string
+        lat:
+          type: number
+          format: float
+        lng:
+          type: number
+          format: float
+        cost:
+          type: number
+          format: float
+        description:
+          type: string
+        created_by:
+          type: string
+        updated_by:
+          type: string
+
+    SpotUpdate:
+      allOf:
+        - $ref: '#/components/schemas/SpotCreate'
+
+    Plan:
+      type: object
+      properties:
+        plan_id:
+          type: integer
+        user_id:
+          type: integer
+        start_time:
+          type: string
+          format: date-time
+        end_time:
+          type: string
+          format: date-time
+        total_cost:
+          type: number
+          format: float
+        spots:
+          type: string
+          description: JSON文字列（[{ "spot_id":1, "order":1}, ...]）
+        created_at:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+        updated_at:
+          type: string
+        updated_by:
+          type: string
+
+    PlanCreate:
+      type: object
+      required: [user_id, start_time, end_time]
+      properties:
+        user_id:
+          type: integer
+        start_time:
+          type: string
+          format: date-time
+        end_time:
+          type: string
+          format: date-time
+        total_cost:
+          type: number
+          format: float
+        spots:
+          type: string
+          description: JSON文字列
+        created_by:
+          type: string
+        updated_by:
+          type: string
+
+    PlanUpdate:
+      allOf:
+        - $ref: '#/components/schemas/PlanCreate'
+
+    PlanSpot:
+      type: object
+      properties:
+        id:
+          type: integer
+        plan_id:
+          type: integer
+        spot_id:
+          type: integer
+        spot_order:
+          type: integer
+        duration:
+          type: string
+          description: INTERVAL形式（例: 01:30:00）
+        created_at:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+        updated_at:
+          type: string
+        updated_by:
+          type: string
+
+    PlanSpotCreate:
+      type: object
+      required: [plan_id, spot_id, spot_order]
+      properties:
+        plan_id:
+          type: integer
+        spot_id:
+          type: integer
+        spot_order:
+          type: integer
+        duration:
+          type: string
+          description: INTERVAL形式
+        created_by:
+          type: string
+        updated_by:
+          type: string
+
+    PlanSpotUpdate:
+      allOf:
+        - $ref: '#/components/schemas/PlanSpotCreate'
