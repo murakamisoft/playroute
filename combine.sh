@@ -4,7 +4,7 @@
 outputFile="combined.txt"
 
 # === 対象拡張子 ===
-extensions=("java" "sql" "xml" "yaml" "gradle" "a5er" "jmx")
+extensions=("java" "sql" "xml" "yaml" "gradle" "a5er" "tsx")
 
 # === 対象外フォルダ ===
 excludeDirs=("build" "out" ".gradle")  # 除外したいフォルダ名を追加
