@@ -1,18 +1,36 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
 export default function PlanPage() {
     const router = useRouter();
+
+    const toLocalDateTimeInput = (date: Date) => {
+        const tzOffset = date.getTimezoneOffset() * 60000; // ミリ秒
+        const localDate = new Date(date.getTime() - tzOffset);
+        return localDate.toISOString().slice(0, 16); // YYYY-MM-DDTHH:mm
+    };
+
     const [form, setForm] = useState({
         startTime: "",
         endTime: "",
-        totalCost: "",
-        interests: "",
+        totalCost: 3000,
+        interests: "歌,キャンプ,酒",
     });
+
     const [loading, setLoading] = useState(false);
+
+    // クライアントレンダリング後に初期値を設定
+    useEffect(() => {
+        setForm({
+            startTime: toLocalDateTimeInput(new Date()),
+            endTime: toLocalDateTimeInput(new Date(Date.now() + 60 * 60 * 3000)),
+            totalCost: 3000,
+            interests: "歌,キャンプ,酒",
+        });
+    }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -31,24 +49,23 @@ export default function PlanPage() {
                     .map((s) => ({ name: s }))
                 : [];
 
-            // 送信する JSON を作成
             const requestData = {
                 userId: 1,
                 startTime: form.startTime,
                 endTime: form.endTime,
                 totalCost: form.totalCost,
                 spots: spotsJson,
-                createdBy: 'nori',
-                updatedBy: 'nori'
+                createdBy: "nori",
+                updatedBy: "nori",
             };
 
-            // デバッグ用ログ出力
             console.log("送信するJSON:", JSON.stringify(requestData, null, 2));
 
             const response = await axios.post("http://localhost:8080/api/plans", requestData);
 
+            console.log("受信レスポンス:", response.data);
 
-            const planId = (response.data as { plan_id: number }).plan_id;
+            const planId = (response.data as { planId: number }).planId;
             router.push(`/plan/result?planId=${planId}`);
         } catch (err) {
             console.error(err);
@@ -116,7 +133,7 @@ export default function PlanPage() {
                         disabled={loading}
                         className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 mt-2 rounded-full shadow-md transition-transform transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        {loading ? "生成中..." : "プラン生成（仮）"}
+                        {loading ? "生成中..." : "プラン生成"}
                     </button>
                 </form>
             </div>

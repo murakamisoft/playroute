@@ -1,8 +1,27 @@
-# 🎮 PlayRoute
+# 🎮 PlayRoute — 週末の遊びプラン自動生成アプリ
 
-**週末の遊びプランを自動生成するWebアプリ**  
-バックエンドに Spring Boot（Java 21）＋ PostgreSQL、  
-フロントエンドに Next.js（TypeScript + Tailwind CSS）を使用しています。
+> “行きたい場所 × 気分 × 時間帯” から、あなたにぴったりの週末プランをAIが提案✨  
+
+---
+
+![Java](https://img.shields.io/badge/Java-21-orange)
+![Spring Boot](https://img.shields.io/badge/SpringBoot-3.x-brightgreen)
+![Next.js](https://img.shields.io/badge/Next.js-14-black)
+![TailwindCSS](https://img.shields.io/badge/Tailwind-3.x-blue)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blueviolet)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6)
+![License](https://img.shields.io/badge/license-MIT-lightgrey)
+
+---
+
+## 🌈 概要
+
+**PlayRoute（プレイルート）** は、  
+「どこ行こう？」を自動で解決する週末プラン生成Webアプリです。
+
+- 条件を入力するだけで遊びプランをAIが提案  
+- カフェ、ドライブ、水族館などを組み合わせてプラン化  
+- シンプルなUIを目指しています
 
 ---
 
@@ -11,24 +30,19 @@
 ```
 
 playroute/
-├── backend/                  # Spring Boot アプリ
+├── backend/                  # Spring Boot (Java 21)
 │   ├── src/main/java/...     # ソースコード
-│   ├── src/test/java/...     # テストコード
-│   ├── build.gradle           # Gradle設定
-│   ├── application.yaml       # DB接続設定
-│   └── document/
-│       └── openApi.yaml       # API仕様書（OpenAPI 3.0）
+│   ├── document/openApi.yaml # API仕様書（OpenAPI 3.0）
+│   └── build.gradle
 │
-├── frontend/                 # Next.js アプリ
-│   ├── app/                  # App Router 構成
-│   ├── components/            # UIコンポーネント
-│   ├── public/                # 静的ファイル
-│   ├── package.json
+├── frontend/                 # Next.js (App Router)
+│   ├── app/                  # ページ構成
+│   ├── components/           # UIコンポーネント
 │   └── tailwind.config.ts
 │
-└── db/                       # データベーススクリプト
-├── create.sql             # テーブル作成
-└── mst_insert.sql         # 初期データ登録
+└── db/                       # PostgreSQL スクリプト
+├── create.sql            # テーブル作成
+└── mst_insert.sql        # 初期データ登録
 
 ````
 
@@ -62,10 +76,8 @@ cd backend
 ./gradlew bootRun
 ```
 
-* 起動ポート: **8080**
-* 動作確認:
-  [http://localhost:8080/api/users](http://localhost:8080/api/users)
-  → 初期データ（例：のり、ゆかり）が返ればOK。
+* 起動ポート: `8080`
+* 動作確認: [http://localhost:8080/api/users](http://localhost:8080/api/users)
 
 ---
 
@@ -77,10 +89,10 @@ npm install
 npm run dev
 ```
 
-* 起動ポート: **3000**
+* 起動ポート: `3000`
 * URL: [http://localhost:3000](http://localhost:3000)
 
-.env.local に以下を設定：
+`.env.local` に以下を設定：
 
 ```
 NEXT_PUBLIC_API_URL=http://localhost:8080/api
@@ -88,12 +100,13 @@ NEXT_PUBLIC_API_URL=http://localhost:8080/api
 
 ---
 
-### 4️⃣ OpenAPI の確認方法
+## 🖥️ 主要画面（MVP）
 
-OpenAPI 仕様書（`backend/document/openApi.yaml`）を
-[Swagger Editor](https://editor.swagger.io/) にドラッグ＆ドロップ。
-
-または、Spring Boot に Swagger UI を追加して表示することも可能です。
+| 画面ID  | パス           | 概要                       | 状況     |
+| ------- | -------------- | -------------------------- | -------- |
+| PLAN-01 | `/plan/create` | 条件入力フォーム           | ✅ 完成   |
+| PLAN-02 | `/plan/result` | プラン結果表示（自動生成） | 🧩 開発中 |
+| SPOT-01 | `/spots`       | スポット一覧表示           | 🕓 予定   |
 
 ---
 
@@ -101,29 +114,21 @@ OpenAPI 仕様書（`backend/document/openApi.yaml`）を
 
 | カテゴリ       | 技術                                             |
 | -------------- | ------------------------------------------------ |
-| バックエンド   | Java 21 / Spring Boot / Gradle / JPA             |
-| データベース   | PostgreSQL                                       |
+| バックエンド   | Java 21 / Spring Boot / JPA / Gradle             |
 | フロントエンド | Next.js (App Router) / TypeScript / Tailwind CSS |
+| データベース   | PostgreSQL                                       |
 | API設計        | OpenAPI 3.0 (YAML形式)                           |
 | 環境           | Windows 11 / VSCode / MINGW64                    |
-
----
-
-## 📦 主な機能（予定含む）
-
-* ユーザー登録・管理
-* 行きたいスポット登録（例：水族館・温泉・カフェ）
-* 条件から遊びプランを自動生成
-* プランの共有（URLまたはQRコード）
-* おしゃれで直感的なUI（Tailwind + モダンデザイン）
 
 ---
 
 ## 🚀 今後の展望
 
 * [ ] OpenAPI から TypeScript 型を自動生成
-* [ ] 「プラン生成」画面のUI実装
-* [ ] Spring Boot に Swagger UI を組み込み
-* [ ] Docker Compose による一括起動
-* [ ] AIによるおすすめプラン生成
+* [ ] 「プラン生成」UIの改善（AI提案UI）
+* [ ] Swagger UI 組み込み
+* [ ] Docker Compose 対応（ワンコマンド起動）
+* [ ] おすすめプランのAI自動生成機能
+
+✨ **Play smart. Play stylish. PlayRoute.**
 

@@ -1,11 +1,12 @@
 package com.playroute.playroute.dto;
 
 import lombok.*;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
-// 表示用
 @Data
 @Builder
 @NoArgsConstructor
@@ -15,7 +16,7 @@ public class PlanDto {
     private Integer userId;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private Double totalCost;
+    private BigDecimal totalCost;
     private List<Map<String, Object>> spots;
     private LocalDateTime createdAt;
     private String createdBy;
